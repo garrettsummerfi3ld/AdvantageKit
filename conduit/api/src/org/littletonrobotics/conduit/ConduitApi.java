@@ -21,6 +21,7 @@ import org.littletonrobotics.conduit.schema.CoreInputs;
 import org.littletonrobotics.conduit.schema.DSData;
 import org.littletonrobotics.conduit.schema.Joystick;
 import org.littletonrobotics.conduit.schema.PDPData;
+import org.littletonrobotics.conduit.schema.CTREPCMData;
 import org.littletonrobotics.conduit.schema.SystemData;
 
 public class ConduitApi {
@@ -49,6 +50,7 @@ public class ConduitApi {
   private final CoreInputs inputs = new CoreInputs();
   private final DSData ds;
   private final PDPData pdp;
+  private final CTREPCM ctrepcm;
   private final SystemData sys;
   private final Joystick[] joysticks = new Joystick[NUM_JOYSTICKS];
 
@@ -60,6 +62,7 @@ public class ConduitApi {
     inputs.__init(0, buffer);
     ds = inputs.ds();
     pdp = inputs.pdp();
+    ctrepcm = inputs.ctrepcm();
     sys = inputs.sys();
     for (int i = 0; i < NUM_JOYSTICKS; i++) {
       joysticks[i] = ds.joysticks(new Joystick(), i);
@@ -368,4 +371,75 @@ public class ConduitApi {
   public long getPDPStickyFaults() {
     return pdp.stickyFaults();
   }
+
+  public void configurePneumaticsControlModule(int moduleID) {
+    ConduitJni.configurePneumaticsControlModule(moduleID);
+  }
+
+  public boolean getCompressor() {
+    return ctrepcm.compressor();
+  }
+
+  public boolean getPressureSwitch() {
+    return ctrepcm.pressureSwitch();
+  }
+
+  public boolean[] getSolenoidStates() {
+    boolean[] ret = new boolean[8];
+    for (int i = 0; i < 8; i++) {
+      ret[i] = ctrepcm.solenoidStates(i);
+    }
+    return ret;
+  }
+
+  public int getCompressorCurrent() {
+    return ctrepcm.compressorCurrent();
+  }
+
+  public boolean getClosedLoopControl() {
+    return ctrepcm.closedLoopControl();
+  }
+
+  public double getPressure() {
+    return ctrepcm.pressure();
+  }
+
+  public boolean getCompressorCurrentTooHighFault() {
+    return ctrepcm.compressorCurrentTooHighFault();
+  }
+
+  public boolean getCompressorCurrentTooHighStickyFault() {
+    return ctrepcm.compressorCurrentTooHighStickyFault();
+  }
+
+  public boolean getCompressorShortedFault() {
+    return ctrepcm.compressorShortedFault();
+  }
+
+  public boolean getCompressorShortedStickyFault() {
+    return ctrepcm.compressorShortedStickyFault();
+  }
+
+  public boolean getCompressorNotConnectedFault() {
+    return ctrepcm.compressorNotConnectedFault();
+  }
+
+  public boolean getCompressorNotConnectedStickyFault() {
+    return ctrepcm.compressorNotConnectedStickyFault();
+  }
+
+  public boolean getSolenoidVoltageFault() {
+    return ctrepcm.solenoidVoltageFault();
+  }
+
+  public boolean getSolenoidVoltageStickyFault() {
+    return ctrepcm.solenoidVoltageStickyFault();
+  }
+
+  public int getModuleNumber() {
+    return ctrepcm.getModuleNumber();
+  }
+
+
+
 }

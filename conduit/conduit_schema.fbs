@@ -51,6 +51,27 @@ struct PDPData {
     total_energy:float64;
 }
 
+struct CTREPDMData {
+    handle:int32;
+    solenoid_count:int32;
+    module_id:int32;
+    compressor_current:float64;
+    closed_loop_enabled:bool;
+    pressure:float64;
+    pressure_switch:bool;
+    compressor_current_fault:bool;
+    compressor_current_sticky_fault:bool;
+    compressor_enabled:bool;
+    compressor_current_faults:uint32;
+    compressor_current_sticky_faults:uint32;
+    compressor_shorted_fault:bool;
+    compressor_shorted_sticky_fault:bool;
+    compressor_not_connected_fault:bool;
+    compressor_not_connected_sticky_fault:bool;
+    solenoid_voltage_fault:bool;
+    solenoid_voltage_sticky_fault:bool;
+}
+
 struct CANStatus {
     percent_bus_utilization:float32;
     bus_off_count:uint32;
@@ -97,4 +118,5 @@ struct CoreInputs {
     ds:DSData;
     pdp:PDPData;
     sys:SystemData;
+    ctrepcm:CTREPDMData;
 }
