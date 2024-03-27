@@ -51,7 +51,7 @@ struct PDPData {
     total_energy:float64;
 }
 
-struct CTREPDMData {
+struct CTREPCMData {
     handle:int32;
     solenoid_count:int32;
     module_id:int32;
