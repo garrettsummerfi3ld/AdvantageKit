@@ -204,4 +204,15 @@ public class PneumaticsControlModule implements Sendable, AutoCloseable {
   public static boolean checkSolenoidChannel(int channel) {
     return channel >= 0 && channel < 8;
   }
+
+  @Override
+  public void initSendable(SendableBuilder builder) {
+    builder.setSmartDashboardType("PneumaticsControlModule");
+    builder.addBooleanProperty("Compressor", this::getCompressor, null);
+    builder.addBooleanProperty("Pressure Switch", this::getPressureSwitch, null);
+    for (int i = 0; i < 8; i++) {
+      final int channel = i;
+      builder.addBooleanProperty("Solenoid " + i, () -> getSolenoid(channel), (value) -> setSolenoid(channel, value));
+    }
+  }
 }
